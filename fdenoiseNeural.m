@@ -45,7 +45,7 @@ function denoisedIm = fdenoiseNeural(noisyIm, sigma, model)
   
 
   % load the weights
-  load(sprintf('model/neuralweights_sig%d.mat',sigma));
+  load(sprintf('neuralweights_sig%d.mat',sigma));
   w = {};
   w{1} = single(w_1);
   w{2} = single(w_2);
