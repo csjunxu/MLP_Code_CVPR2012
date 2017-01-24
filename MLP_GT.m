@@ -1,17 +1,25 @@
 %--------------------------------------------------------------------------
 clear;
-GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\ourdata\clean\';
-GT_fpath = fullfile(GT_Original_image_dir, '*.png');
-TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\ourdata\noisy\';
-TT_fpath = fullfile(TT_Original_image_dir, '*.png');
+GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\DJI_Results\Real_MeanImage\';
+GT_fpath = fullfile(GT_Original_image_dir, '*.JPG');
+TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\DJI_Results\Real_NoisyImage\';
+TT_fpath = fullfile(TT_Original_image_dir, '*.JPG');
+% GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_ccnoise_denoised_part\';
+% GT_fpath = fullfile(GT_Original_image_dir, '*mean.png');
+% TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_ccnoise_denoised_part\';
+% TT_fpath = fullfile(TT_Original_image_dir, '*real.png');
 GT_im_dir  = dir(GT_fpath);
 TT_im_dir  = dir(TT_fpath);
 im_num = length(TT_im_dir);
 addpath 'model';
 method = 'MLP';
+write_sRGB_dir = ['C:/Users/csjunxu/Desktop/CVPR2017/DJI_Results/' method '/'];
+if ~isdir(write_sRGB_dir)
+    mkdir(write_sRGB_dir)
+end
+
 for nSig     =  [10 25]
     format compact;
-    
     PSNR = [];
     SSIM = [];
     for i = 1 : im_num
@@ -38,9 +46,9 @@ for nSig     =  [10 25]
         PSNR = [PSNR csnr( uint8(IMout), uint8(IM_GT), 0, 0 )];
         SSIM = [SSIM cal_ssim( uint8(IMout), uint8(IM_GT), 0, 0 )];
         fprintf('The final PSNR = %2.4f, SSIM = %2.4f. \n', PSNR(end), SSIM(end));
-        imwrite(IMout, ['C:\Users\csjunxu\Desktop\CVPR2017\our_Results\' method '_' IMname '.png']);
+        imwrite(IMout, [write_sRGB_dir method '_RID_' IMname '.png']);
     end
     mPSNR = mean(PSNR);
     mSSIM = mean(SSIM);
-    save(['C:\Users\csjunxu\Desktop\CVPR2017\' method '_' num2str(nSig) '_' num2str(im_num) '.mat'],'nSig','PSNR','mPSNR','SSIM','mSSIM');
+    save(['C:/Users/csjunxu/Desktop/CVPR2017/DJI_Results/', method, '_' num2str(nSig) '.mat'],'nSig','PSNR','mPSNR','SSIM','mSSIM');
 end
