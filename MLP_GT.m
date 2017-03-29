@@ -32,12 +32,14 @@ for nSig     =  [10]
     format compact;
     PSNR = [];
     SSIM = [];
+    RunTime = [];
     for i = 1 : im_num
         IM =   double(imread( fullfile(TT_Original_image_dir,TT_im_dir(i).name) ));
         IM_GT = double(imread(fullfile(GT_Original_image_dir, GT_im_dir(i).name)));
         S = regexp(TT_im_dir(i).name, '\.', 'split');
         IMname = S{1};
         [h,w,ch] = size(IM);
+        time0 = clock;
         %         randn('seed',0);
         %         noise_img          =   I+ nSig*randn(size(I));
         %         noise_img = double(uint8(noise_img));
@@ -53,6 +55,8 @@ for nSig     =  [10]
             IMoutcc = fdenoiseNeural(IM(:,:,cc), nSig, model);
             IMout(:,:,cc) = IMoutcc;
         end
+        RunTime = [RunTime etime(clock,time0)];
+        fprintf('Total elapsed time = %f s\n', (etime(clock,time0)) );
         PSNR = [PSNR csnr( uint8(IMout), uint8(IM_GT), 0, 0 )];
         SSIM = [SSIM cal_ssim( uint8(IMout), uint8(IM_GT), 0, 0 )];
         fprintf('The final PSNR = %2.4f, SSIM = %2.4f. \n', PSNR(end), SSIM(end));
@@ -60,5 +64,6 @@ for nSig     =  [10]
     end
     mPSNR = mean(PSNR);
     mSSIM = mean(SSIM);
-    save(['C:/Users/csjunxu/Desktop/CVPR2017/our_Results/', method, '_our' num2str(im_num) '.mat'],'PSNR','mPSNR','SSIM','mSSIM');
+    mRunTime = mean(RunTime);
+    save([write_sRGB_dir method, '_our' num2str(im_num) '.mat'],'PSNR','mPSNR','SSIM','mSSIM','RunTime','mRunTime');
 end
