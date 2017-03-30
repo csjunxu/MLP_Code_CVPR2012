@@ -18,7 +18,7 @@ noise_levels     =  [10];
 images           =  dir(fullfile(ref_folder,'*.png'));
 format compact;
 
-for i = [5 7 8 14] %1 : numel(images)
+for i = 1 : numel(images)
     [~, name, exte]  =  fileparts(images(i).name);
     IM =   double(imread( fullfile(ref_folder,images(i).name) ));
     [h,w,ch] = size(IM);
