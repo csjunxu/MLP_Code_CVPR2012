@@ -7,7 +7,7 @@ clear;
 % GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_MeanImage\';
 % GT_fpath = fullfile(GT_Original_image_dir, '*.png');
 % TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_NoisyImage\';
-% TT_fpath = fullfile(TT_Original_image_dir, '*.png'); 
+% TT_fpath = fullfile(TT_Original_image_dir, '*.png');
 % GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_ccnoise_denoised_part\';
 % GT_fpath = fullfile(GT_Original_image_dir, '*mean.png');
 % TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_ccnoise_denoised_part\';
@@ -41,8 +41,8 @@ for nSig     =  [10]
     for i = 1 : im_num
         IM =   double(imread( fullfile(TT_Original_image_dir,TT_im_dir(i).name) ));
         IM_GT = double(imread(fullfile(GT_Original_image_dir, GT_im_dir(i).name)));
-    % S = regexp(TT_im_dir(i).name, '\.', 'split');
-    IMname = TT_im_dir(i).name(1:end-9);
+        % S = regexp(TT_im_dir(i).name, '\.', 'split');
+        IMname = TT_im_dir(i).name(1:end-9);
         [h,w,ch] = size(IM);
         time0 = clock;
         %         randn('seed',0);
