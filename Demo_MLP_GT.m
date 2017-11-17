@@ -45,9 +45,6 @@ for nSig     =  [10]
         IMname = TT_im_dir(i).name(1:end-9);
         [h,w,ch] = size(IM);
         time0 = clock;
-        %         randn('seed',0);
-        %         noise_img          =   I+ nSig*randn(size(I));
-        %         noise_img = double(uint8(noise_img));
         model = {};
         % width of the Gaussian window for weighting output pixels
         model.weightsSig = 2;
@@ -70,5 +67,6 @@ for nSig     =  [10]
     mPSNR = mean(PSNR);
     mSSIM = mean(SSIM);
     mRunTime = mean(RunTime);
-    save([write_MAT_dir method, '_our.mat'],'PSNR','mPSNR','SSIM','mSSIM','RunTime','mRunTime');
+    matname = sprintf([write_MAT_dir method '_our.mat']);
+    save(matname,'PSNR','mPSNR','SSIM','mSSIM','RunTime','mRunTime');
 end
