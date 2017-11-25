@@ -28,7 +28,7 @@ im_num = length(TT_im_dir);
 addpath 'C:\Users\csjunxu\Desktop\JunXu\Paper\Image Video Denoising\MLP CVPR2012\MLP\model';
 method = 'MLP';
 write_MAT_dir = ['C:/Users/csjunxu/Desktop/CVPR2018 Denoising/PolyU_Results/'];
-write_sRGB_dir = ['C:/Users/csjunxu/Desktop/CVPR2018 Denoising/PolyU_Results/' method];
+write_sRGB_dir = [write_sRGB_dir method];
 if ~isdir(write_sRGB_dir)
     mkdir(write_sRGB_dir)
 end
